@@ -7,10 +7,12 @@ class MainInfoParser(html.parser.HTMLParser):
 
     def __init__(self, main_info_tags: list, url: str):
         super().__init__()
-        self.__current_tags = []
-        self.main_info = ""
+
         self.main_info_tags = main_info_tags
         self.url = url
+
+        self.__current_tags = []  # Стек тегов
+        self.main_info = ""
 
     def handle_starttag(self, tag, attrs):
         """Кладем в стек тегов теги, указанные в main_info_tags"""
@@ -34,6 +36,7 @@ class MainInfoParser(html.parser.HTMLParser):
                 raise ValueError("HTML-страница невалидна!")
 
             self.__current_tags.pop()
+            self.main_info += "\n"
 
     def handle_data(self, data):
         """Если мы сейчас находимся внутри тега, указанного в main_info_tags, добавляем данные в результат"""
