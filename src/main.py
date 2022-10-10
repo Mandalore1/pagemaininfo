@@ -2,7 +2,7 @@ import sys
 import urllib.request
 
 from parser import MainInfoParser
-
+from src.saver import FileSaver
 
 main_info_tags = ["h1", "h2", "h3", "h4", "h5", "h6", "p"]
 
@@ -27,7 +27,8 @@ def main():
         parser = MainInfoParser(main_info_tags, url)
         parser.feed(html_code)
 
-        print(parser.main_info)
+        saver = FileSaver(parser.main_info, url, 80)
+        saver.save_to_file()
     except Exception as e:
         print(f"Ошибка: {e}")
 
