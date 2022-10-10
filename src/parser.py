@@ -14,7 +14,7 @@ class MainInfoParser(html.parser.HTMLParser):
         self.__current_tags = []  # Стек тегов
         self.main_info = ""
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag: str, attrs: list):
         """Кладем в стек тегов теги, указанные в main_info_tags"""
         if tag == "a" and self.__current_tags:
             # Если встретили тег <a> и находимся внутри нужного тега, добавляем ссылку в результат
@@ -28,7 +28,7 @@ class MainInfoParser(html.parser.HTMLParser):
         elif tag in self.main_info_tags:
             self.__current_tags.append(tag)
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str):
         """При закрытии тега, указанного в main_info_tags, убираем его из стека"""
         if tag in self.main_info_tags:
             # Если не соблюден баланс тегов, выбрасываем исключение
@@ -38,12 +38,12 @@ class MainInfoParser(html.parser.HTMLParser):
             self.__current_tags.pop()
             self.main_info += "\n"
 
-    def handle_data(self, data):
+    def handle_data(self, data: str):
         """Если мы сейчас находимся внутри тега, указанного в main_info_tags, добавляем данные в результат"""
         if self.__current_tags:
             self.main_info += data
 
-    def __replace_href(self, href):
+    def __replace_href(self, href: str) -> str:
         """Заменяет href из тега <a> на ссылку в квадратных скобках"""
         parsed_url = urllib.parse.urlparse(self.url)
         host_name = parsed_url.netloc

@@ -7,7 +7,7 @@ from parser import MainInfoParser
 main_info_tags = ["h1", "h2", "h3", "h4", "h5", "h6", "p"]
 
 
-def get_page(url):
+def get_page(url: str) -> str:
     """Получает страницу по url"""
     req = urllib.request.urlopen(url)
     return str(req.read(), encoding="utf-8")
