@@ -2,9 +2,8 @@ import sys
 import urllib.request
 
 from parser import MainInfoParser
-from src.saver import FileSaver
-
-main_info_tags = ["h1", "h2", "h3", "h4", "h5", "h6", "p"]
+from saver import FileSaver
+import settings
 
 
 def get_page(url: str) -> str:
@@ -24,10 +23,10 @@ def main():
     try:
         html_code = get_page(url)
 
-        parser = MainInfoParser(main_info_tags, url)
+        parser = MainInfoParser(settings.TAGS_TO_SEARCH, url)
         parser.feed(html_code)
 
-        saver = FileSaver(parser.main_info, url, 80)
+        saver = FileSaver(parser.main_info, url, settings.LINE_WIDTH)
         saver.save_to_file()
     except Exception as e:
         print(f"Ошибка: {e}")

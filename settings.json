@@ -1,0 +1,4 @@
+{
+  "tags_to_search": ["h1", "h2", "h3", "h4", "h5", "h6", "p"],
+  "line_width": 80
+}
